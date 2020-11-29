@@ -30,9 +30,21 @@
 
   - ## Instalación de mongoDB
 
+    Cómo desinstalar mongo
+
+    ```
+      Sudo apt-get remove mongodb* --purge
+    ```
+
     [MongoDb - instalación](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
 
-    Puede que me problemas al arrancar el servicio:
+    Puede que tenga problemas al arrancar el servicio:
+
+    - Unmask mongodb
+
+      ```
+      sudo systemctl unmask mongod
+      ```
 
     - eliminar el directorio **/var/lib/mongodb**
     - volver a crear el directorio **/var/lib/mongodb**
@@ -85,7 +97,7 @@
       ```
     - ### Drivers
 
-      Podemos usar drivers para conectar nuestra aplicación al servidor de mongoDB según el lenguaje que estemos utilizando (node, python,...) Pero las queryes ser´an iguales que trabajar en el shell de mongoDB
+      Podemos usar drivers para conectar nuestra aplicación al servidor de mongoDB según el lenguaje que estemos utilizando (node, python,...) Pero las queries serán iguales que trabajar en el shell de mongoDB
 
       [MongoDb - Drivers](https://docs.mongodb.com/drivers/)
 

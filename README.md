@@ -19,13 +19,13 @@ En realidad cuando mongoDB guarda los datos lo hace como BSON(Binary object nota
 
 ![not found](img/img-1.png)
 
-### Carracterísticas de mongoDB
+## Carracterísticas de mongoDB
 
 - No sigue un esquema
 - Los datos se guardan todos juntos
 - Por lo anterior se eliminan gran parte de las relaciones (JOINS) entre datos
 
-### Ecosistema de mongoDB
+## Ecosistema de mongoDB
 
 ![not found](img/img-2.png)
 
@@ -103,7 +103,7 @@ sudo rm -r /var/log/mongodb
 sudo rm -r /var/lib/mongodb
 ```
 
-# configuración de mongo
+## configuración de mongo
 
 El archivo de configuración de mongo se encuentra en la ruta `/etc/mongod.conf`.
 
@@ -184,37 +184,19 @@ sudo service mongod restart
 ```
 
 
-## Basics
+# Basics
 
-### Comandos iniciales
+## JSON vs BSON
 
-Entrar en mongo shell
-```
-mongo
-```
-mostrar las bd
-```
-show dbs
-```
-acceder a una de las bd o crearla si no existe
-```
-use dbNAme
-```
-Una vez dentro crear una primera colección(products) e insertar un item
-```
-db.products.insertOne( {name: "book", price:10.99 } )
-```
-Mostrar los datos
-```
-db.products.find()
-```
-### Drivers
+Nosotros escribimos los datos usanando la notación JSON (JavaScript Object Notation) pero mongo transforma estos datos a BSON (Binary JSON). Es una mejor manera de almacenar datos, más eficiente.
+ 
+## Drivers
 
 Podemos usar drivers para conectar nuestra aplicación al servidor de mongoDB según el lenguaje que estemos utilizando (node, python,...) Pero las queries serán iguales que trabajar en el shell de mongoDB
 
 [MongoDb - Drivers](https://docs.mongodb.com/drivers/)
 
-### Cómo funciona mongoDB
+## Cómo funciona mongoDB
 
 ![not found](img/img-3.png)
 
@@ -226,4 +208,104 @@ Podemos usar drivers para conectar nuestra aplicación al servidor de mongoDB se
 
 ---
 
-# Operaciones CRUD
+## Operaciones CRUD
+
+En nuestro mongo server es donde tenemos nuestras bases de datos y cada una de ellas contiene uno o más colecciones(las tablas en sql) y éstas a su vez contienen los documentos que son los que relamente contienen la información.
+
+Toda esta estructura se va creando de manera implícita a medida que vamos almacenando la información.
+
+![not found](img/img-5.png)
+
+### Añadiendo datos
+
+Cuando estamos en el shell de mongo podemos crear una nueva bbdd con el comando use nombreBBDD pero no se creará relamente hasta que no almacenemos datos.
+
+Cuando insertamos datos
+
+```js
+db.flightsData.insertOne({
+  "departureAirport": "MUC",
+  "arrivalAirport": "SFO",
+  "aircraft": "Airbus A380",
+  "distance": 12000,
+  "intercontinental": true   
+}) 
+```
+mongo crea un id para cada documento, este ID es un objeto llamado ObjectId
+
+```javascript 
+"acknowledged" : true,
+"insertedId" : ObjectId("60381afe739cc4092c54f411") 
+```
+para mostrar los datos
+
+```javascript 
+db.flightsData.find().pretty()
+
+{
+  "_id" : ObjectId("60381afe739cc4092c54f411"),
+  "departureAirport" : "MUC",
+  "arrivalAirport" : "SFO",
+  "aircraft" : "Airbus A380",
+  "distance" : 12000,
+  "intercontinental" : true
+}
+
+```
+Vemos com automáticamente se ha añadido un campo `_"id"`
+
+Podemos generar nosotros ese id pero debemos seguir la sintaxi
+
+```javascript 
+db.flightsData.insertOne({
+  "departureAirport": "MUC",
+  "arrivalAirport": "SFO",
+  _id: "miIdPersonalizado"
+})
+```
+```javascript 
+{
+  "_id": ObjectId("60381afe739cc4092c54f411"),
+  "departureAirport": "MUC",
+  "arrivalAirport": "SFO",
+  "aircraft": "Airbus A380",
+  "distance": 12000,
+  "intercontinental": true
+},
+{
+  "_id": "miIdPersonalizado",
+  "departureAirport": "MUC",
+  "arrivalAirport": "SFO"
+}
+ 
+```
+Vemos como no es necesario seguir el mismos esquema en los datos y como respera mi ID personalizado.
+
+
+---
+# Comandos importantes
+
+Entrar en mongo shell
+```
+mongo
+```
+mostrar las bd
+```js
+show dbs
+```
+acceder a una de las bd o crearla si no existe
+```js
+use dbNAme
+```
+Una vez dentro crear una primera colección(products) e insertar un item
+```js
+db.products.insertOne( {name: "book", price:10.99 } )
+```
+Mostrar los datos
+```js
+db.products.find()
+```
+Mostrar los datos formatados
+```javascript 
+db.products.find().pretty() 
+```

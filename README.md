@@ -15,7 +15,7 @@ Es una base de datos preparada para almacenar multitud de datos y poder trajar c
 Mongo crea un entorno (servidor) donde almacenamos nuestras base de datos.
 Por ejemplo creamos un base de datos "tienda" ésta en lugar de tablas almacena colecciones y dentro de estas tenemos documents que son datos escritos en JSON (JS object notation), su peculiaridad es que no siguen un esquema, de ahí la gran flexibilidad de mongoDB. Esta manera de almacenar datos evita tener que realizar los JOINS de SQL porque podemos almacenar juntos todos los datos que necesitemos.
 
-En realidad cuando mongoDB guarda los datos lo hace como BSON(Binary object notation ) que esencialmente es una manera más eficiente que jSON.
+En realidad cuando mongoDB guarda los datos lo hace como BSON(Binary object notation ) es una representación binaria de JSON haciéndolo más eficiente.
 
 ![not found](img/img-1.png)
 
